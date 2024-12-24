@@ -11,73 +11,232 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+
+    <script>
+      const openClose = () => {
+        $("#postingBox").toggle();
+      };
+    </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100..900&display=swap");
+
+      body {
+        background-color: rgb(20, 20, 20);
+      }
 
       * {
         font-family: "Noto Sans KR", serif;
         font-optical-sizing: auto;
       }
 
-      .team_name {
-        background-color: green;
-        margin: 0px auto 0px auto;
+      .team_main {
+        width: 100%;
+        height: 850px;
+        color: white;
+
+        background-image: url("https://postfiles.pstatic.net/20160118_93/sosohan222_1453105673993cmkHk_PNG/4.png?type=w2");
+        background-position: center;
+        background-size: cover;
 
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: left;
         justify-content: center;
       }
 
-      .team_name > div {
-        background-color: greenyellow;
-
-        margin: 20px auto 20px auto;
+      .team_main_name {
+        font-family: "Black Han Sans", serif;
+        font-weight: auto;
+        font-style: normal;
+        margin: auto auto 20px 50px;
         font-size: 100px;
+        color: darkblue;
+        /* background-color: green; */
       }
 
-      .team_intro {
-        background-color: blue;
-        margin: 20px auto 0px auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+      .team_member {
+        font-size: 40px;
+        color: chocolate;
       }
 
-      .team_intro > p {
-        font-size: 120px;
+      .team_content {
+        margin-bottom: 60px;
+        font-size: 40px;
+        color: blue;
       }
 
       .team_card {
         margin: 20px auto 0px auto;
-        background-color: skyblue;
-        width: 1200px;
+        width: 100%;
         padding: 20px 20px 20px 20px;
       }
 
+      .team_homepage {
+        font-size: 40px;
+        color: white;
+        margin: 0px auto 10px 0px;
+      }
+
       .guestbook {
-        background-color: khaki;
         margin: 50px auto 30px auto;
         height: 800px;
         width: 1200px;
+        padding: 10px;
+      }
+
+      .guestbook > button {
+        font-size: 40px;
+      }
+      .guestbook_title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        height: 50px;
+        background-color: khaki;
+        font-size: 30px;
+        padding: 5px;
+        margin-bottom: 10px;
+
+        color: white;
+
+        border: 1px solid white;
+        border-radius: 10px;
+      }
+
+      .guestbook_title > p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .guestbook_input {
+        margin: 0px auto 0px auto;
+        width: 50%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .myPostingBox {
+        margin: 20px auto 20px auto;
+        width: 500px;
+
+        border: 1px solid white;
+
+        padding: 20px;
+        border-radius: 5px;
+      }
+      .myPostingBox > button {
+        width: 100%;
+      }
+
+      .guestbook_content {
+        margin: 0px auto 0px auto;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: top;
+        justify-content: center;
+      }
+
+      .guestbook_content_list {
+        height: 80px;
+        padding: 10px;
+
+        display: flex;
+        flex-direction: row;
+      }
+
+      .content_nickname {
+        border: 1px solid white;
+        color: white;
+        width: 20%;
+        margin-right: 20px;
+        padding: 10px;
+
+        border-radius: 5px;
+      }
+      .content_writing {
+        border: 1px solid white;
+        color: white;
+        width: 80%;
+        padding: 10px;
+        border-radius: 5px;
       }
     </style>
   </head>
   <body>
-    <!-- 팀이름 -->
-    <div class="team_name">
-      <div>Prime</div>
-    </div>
+    <!-- 팀 헤더 -->
+    <header class="p-3 text-bg-dark">
+      <div class="container">
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+        >
+          <a
+            href="/"
+            class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
+          >
+            <svg
+              class="bi me-2"
+              width="40"
+              height="32"
+              role="img"
+              aria-label="Bootstrap"
+            >
+              <use xlink:href="#bootstrap"></use>
+            </svg>
+          </a>
 
-    <!-- 팀 소개 -->
-    <div class="team_intro">
-      <p>팀 소개 && 팀 각오</p>
+          <ul
+            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+          >
+            <li>
+              <a href="#" class="nav-link px-2 text-danger">Prime</a>
+            </li>
+            <li><a href="#" class="nav-link px-2 text-white">홈</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
+          </ul>
+
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input
+              type="search"
+              class="form-control form-control-dark text-bg-dark"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+          </form>
+
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-light me-2">
+              Login
+            </button>
+            <button type="button" class="btn btn-danger">Sign-up</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 팀이름 -->
+    <div class="team_main">
+      <div class="team_main_name">
+        <p>Prime</p>
+        <p class="team_member">제작 : 이은성, 문유빈, 이범서, 김유란, 한영재</p>
+        <p class="team_content">
+          새롭게 하기 위한 팀이 왔다.<br />
+          2034년 최고의 영화
+        </p>
+      </div>
     </div>
 
     <!-- 팀 카드 -->
     <div class="team_card">
-      <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="team_homepage">팀원의 홈페이지</div>
+      <div class="row row-cols-1 row-cols-md-6 g-4">
         <div class="col">
           <div class="card">
             <img
@@ -86,8 +245,8 @@
               alt="..."
             />
             <div class="card-body">
-              <h1 class="card-title">이름</h1>
-              <p class="card-text">각오 한마디</p>
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
             </div>
           </div>
         </div>
@@ -99,8 +258,8 @@
               alt="..."
             />
             <div class="card-body">
-              <h1 class="card-title">이름</h1>
-              <p class="card-text">각오 한마디</p>
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
             </div>
           </div>
         </div>
@@ -112,8 +271,8 @@
               alt="..."
             />
             <div class="card-body">
-              <h1 class="card-title">이름</h1>
-              <p class="card-text">각오 한마디</p>
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
             </div>
           </div>
         </div>
@@ -125,8 +284,8 @@
               alt="..."
             />
             <div class="card-body">
-              <h1 class="card-title">이름</h1>
-              <p class="card-text">각오 한마디</p>
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
             </div>
           </div>
         </div>
@@ -138,8 +297,8 @@
               alt="..."
             />
             <div class="card-body">
-              <h1 class="card-title">이름</h1>
-              <p class="card-text">각오 한마디</p>
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
             </div>
           </div>
         </div>
@@ -151,8 +310,8 @@
               alt="..."
             />
             <div class="card-body">
-              <h1 class="card-title">이름</h1>
-              <p class="card-text">각오 한마디</p>
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
             </div>
           </div>
         </div>
@@ -160,6 +319,56 @@
     </div>
 
     <!-- 방명록 -->
-    <div class="guestbook"></div>
+    <div class="guestbook">
+      <div class="guestbook_title">
+        <p>방명록</p>
+        <button onclick="openClose()" type="button" class="btn btn-secondary">
+          적기
+        </button>
+      </div>
+      <div class="guestbook_input">
+        <div id="postingBox" class="myPostingBox">
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="movieImage"
+              placeholder="영화 이미지 주소"
+            />
+            <label for="floatingInput">닉네임</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="movieTitle"
+              placeholder="영화 제목"
+            />
+            <label for="floatingInput">남길 글</label>
+          </div>
+          <button onclick="makeCard()" type="button" class="btn btn-danger">
+            기록하기
+          </button>
+        </div>
+      </div>
+      <div class="guestbook_content">
+        <div class="guestbook_content_list">
+          <p class="content_nickname">닉네임</p>
+          <p class="content_writing">남긴 글</p>
+        </div>
+        <div class="guestbook_content_list">
+          <p class="content_nickname">닉네임</p>
+          <p class="content_writing">남긴 글</p>
+        </div>
+        <div class="guestbook_content_list">
+          <p class="content_nickname">닉네임</p>
+          <p class="content_writing">남긴 글</p>
+        </div>
+        <div class="guestbook_content_list">
+          <p class="content_nickname">닉네임</p>
+          <p class="content_writing">남긴 글</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
