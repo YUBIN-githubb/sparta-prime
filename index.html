@@ -1,363 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>미니온보딩 13조 - Prime</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>미니온보딩 13조 - Prime</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script type="module">
+      // Firebase SDK 라이브러리 가져오기
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import {
+        collection,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-  <script type="module">
-    // Firebase SDK 라이브러리 가져오기
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyCQ4H7stZ9xqkpG-jbPJRb9Xtmz2Cyz2G0",
-      authDomain: "sparta-prime.firebaseapp.com",
-      projectId: "sparta-prime",
-      storageBucket: "sparta-prime.firebasestorage.app",
-      messagingSenderId: "306127206461",
-      appId: "1:306127206461:web:cbea6b1e2c8c4193c9d254",
-      measurementId: "G-Q2PYG6MT1F"
-    };
-
-
-    // Firebase 인스턴스 초기화
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    $("#postingbtn").click(async function () {
-      let nickname = $('#nickname').val();
-      let comment = $('#comment').val();
-
-      let doc = {
-        'nickname': nickname,
-        'comment': comment
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCQ4H7stZ9xqkpG-jbPJRb9Xtmz2Cyz2G0",
+        authDomain: "sparta-prime.firebaseapp.com",
+        projectId: "sparta-prime",
+        storageBucket: "sparta-prime.firebasestorage.app",
+        messagingSenderId: "306127206461",
+        appId: "1:306127206461:web:cbea6b1e2c8c4193c9d254",
+        measurementId: "G-Q2PYG6MT1F",
       };
-      await addDoc(collection(db, "guestbook"), doc);
-      alert('저장 완료!');
-      window.location.reload();
-    })
 
-    let docs = await getDocs(collection(db, "guestbook"));      
-    docs.forEach((doc) => {
-      let row = doc.data();
-      let nickname = row['nickname'];
-      let comment = row['comment'];
+      // Firebase 인스턴스 초기화
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
 
-      let temp_html = `
+      $("#postingbtn").click(async function () {
+        let nickname = $("#nickname").val();
+        let comment = $("#comment").val();
+
+        let doc = {
+          nickname: nickname,
+          comment: comment,
+        };
+        await addDoc(collection(db, "guestbook"), doc);
+        alert("저장 완료!");
+        window.location.reload();
+      });
+
+      let docs = await getDocs(collection(db, "guestbook"));
+      docs.forEach((doc) => {
+        let row = doc.data();
+        let nickname = row["nickname"];
+        let comment = row["comment"];
+
+        let temp_html = `
       <div class="guestbook_content_list">
         <p class="content_nickname">${nickname}</p>
         <p class="content_writing">${comment}</p>
       </div>`;
-      $('#guestbook_content').append(temp_html);
-    });
+        $("#guestbook_content").append(temp_html);
+      });
 
-    $("#writebtn").click(async function () {
-      $('#postingBox').toggle();
-    })
-  </script>
+      $("#writebtn").click(async function () {
+        $("#postingBox").toggle();
+      });
+    </script>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
-    @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100..900&display=swap");
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100..900&display=swap");
 
-    body {
-      background-color: rgb(20, 20, 20);
-    }
+      body {
+        background-color: rgb(20, 20, 20);
+      }
 
-    * {
-      font-family: "Noto Sans KR", serif;
-      font-optical-sizing: auto;
-    }
+      * {
+        font-family: "Noto Sans KR", serif;
+        font-optical-sizing: auto;
+      }
 
-    .team_main {
-      width: 100%;
-      height: 850px;
-      color: white;
+      .team_main {
+        width: 100%;
+        height: 850px;
+        color: white;
 
-      background-image: url("https://postfiles.pstatic.net/20160118_93/sosohan222_1453105673993cmkHk_PNG/4.png?type=w2");
-      background-position: center;
-      background-size: cover;
+        background-image: url("https://postfiles.pstatic.net/20160118_93/sosohan222_1453105673993cmkHk_PNG/4.png?type=w2");
+        background-position: center;
+        background-size: cover;
 
-      display: flex;
-      flex-direction: column;
-      align-items: left;
-      justify-content: center;
-    }
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+      }
 
-    .team_main_name {
-      font-family: "Black Han Sans", serif;
-      font-weight: auto;
-      font-style: normal;
-      margin: auto auto 20px 50px;
-      font-size: 100px;
-      color: darkblue;
-      /* background-color: green; */
-    }
+      .team_main_name {
+        font-family: "Black Han Sans", serif;
+        font-weight: auto;
+        font-style: normal;
+        padding: 0px 10px 0px 10px;
+        background-color: rgb(40, 40, 40, 0.5);
+        border-radius: 20px;
+        margin: auto auto 20px 50px;
+        font-size: 100px;
+        color: skyblue;
+        /* background-color: green; */
+      }
 
-    .team_member {
-      font-size: 40px;
-      color: chocolate;
-    }
+      .team_member {
+        font-size: 40px;
+        color: rgb(120, 163, 255);
+      }
 
-    .team_content {
-      margin-bottom: 60px;
-      font-size: 40px;
-      color: blue;
-    }
+      .team_content {
+        margin-bottom: 60px;
+        font-size: 40px;
+        color: rgb(193, 173, 242);
+      }
 
-    .team_card {
-      margin: 20px auto 0px auto;
-      width: 100%;
-      padding: 20px 20px 20px 20px;
-    }
+      .team_card {
+        margin: 20px auto 0px auto;
+        width: 100%;
+        padding: 20px 20px 20px 20px;
+      }
 
-    .team_homepage {
-      font-size: 40px;
-      color: white;
-      margin: 0px auto 10px 0px;
-    }
+      .team_homepage {
+        font-size: 40px;
+        color: white;
+        margin: 0px auto 10px 0px;
+      }
 
-    .guestbook {
-      margin: 50px auto 30px auto;
-      height: 800px;
-      width: 1200px;
-      padding: 10px;
-    }
+      .guestbook {
+        margin: 50px auto 30px auto;
+        height: 800px;
+        width: 1200px;
+        padding: 10px;
+      }
 
-    .guestbook>button {
-      font-size: 40px;
-    }
+      .guestbook > button {
+        font-size: 40px;
+      }
 
-    .guestbook_title {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
+      .guestbook_title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
 
-      height: 50px;
-      background-color: khaki;
-      font-size: 30px;
-      padding: 5px;
-      margin-bottom: 10px;
+        height: 50px;
+        background-color: khaki;
+        font-size: 30px;
+        padding: 5px;
+        margin-bottom: 10px;
 
-      color: white;
+        color: white;
 
-      border: 1px solid white;
-      border-radius: 10px;
-    }
+        border: 1px solid white;
+        border-radius: 10px;
+      }
 
-    .guestbook_title>p {
-      margin-left: auto;
-      margin-right: auto;
-    }
+      .guestbook_title > p {
+        margin-left: auto;
+        margin-right: auto;
+      }
 
-    .guestbook_input {
-      margin: 0px auto 0px auto;
-      width: 50%;
+      .guestbook_input {
+        margin: 0px auto 0px auto;
+        width: 50%;
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .myPostingBox {
-      margin: 20px auto 20px auto;
-      width: 500px;
+      .myPostingBox {
+        margin: 20px auto 20px auto;
+        width: 500px;
 
-      border: 1px solid white;
+        border: 1px solid white;
 
-      padding: 20px;
-      border-radius: 5px;
-    }
+        padding: 20px;
+        border-radius: 5px;
+      }
 
-    .myPostingBox>button {
-      width: 100%;
-    }
+      .myPostingBox > button {
+        width: 100%;
+      }
 
-    .guestbook_content {
-      margin: 0px auto 0px auto;
-      width: 90%;
-      display: flex;
-      flex-direction: column;
-      align-items: top;
-      justify-content: center;
-    }
+      .guestbook_content {
+        margin: 0px auto 0px auto;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: top;
+        justify-content: center;
+      }
 
-    .guestbook_content_list {
-      height: 80px;
-      padding: 10px;
+      .guestbook_content_list {
+        height: 80px;
+        padding: 10px;
 
-      display: flex;
-      flex-direction: row;
-    }
+        display: flex;
+        flex-direction: row;
+      }
 
-    .content_nickname {
-      border: 1px solid white;
-      color: white;
-      width: 20%;
-      margin-right: 20px;
-      padding: 10px;
+      .content_nickname {
+        border: 1px solid white;
+        color: white;
+        width: 20%;
+        margin-right: 20px;
+        padding: 10px;
 
-      border-radius: 5px;
-    }
+        border-radius: 5px;
+      }
 
-    .content_writing {
-      border: 1px solid white;
-      color: white;
-      width: 80%;
-      padding: 10px;
-      border-radius: 5px;
-    }
-  </style>
-</head>
+      .content_writing {
+        border: 1px solid white;
+        color: white;
+        width: 80%;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
 
-<body>
-  <!-- 팀 헤더 -->
-  <header class="p-3 text-bg-dark">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-        </a>
+  <body>
+    <!-- 팀 헤더 -->
+    <header class="p-3 text-bg-dark">
+      <div class="container">
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+        >
+          <a
+            href="/"
+            class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
+          >
+            <svg
+              class="bi me-2"
+              width="40"
+              height="32"
+              role="img"
+              aria-label="Bootstrap"
+            >
+              <use xlink:href="#bootstrap"></use>
+            </svg>
+          </a>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li>
-            <a href="#" class="nav-link px-2 text-danger">Prime</a>
-          </li>
-          <li><a href="#" class="nav-link px-2 text-white">홈</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
-        </ul>
+          <ul
+            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+          >
+            <li>
+              <a href="#" class="nav-link px-2 text-danger">Prime</a>
+            </li>
+            <li><a href="#" class="nav-link px-2 text-white">홈</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
+          </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-            aria-label="Search" />
-        </form>
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input
+              type="search"
+              class="form-control form-control-dark text-bg-dark"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+          </form>
+        </div>
+      </div>
+    </header>
 
-        <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">
-            Login
-          </button>
-          <button type="button" class="btn btn-danger">Sign-up</button>
+    <!-- 팀이름 -->
+    <div class="team_main">
+      <div class="team_main_name">
+        <p>Prime</p>
+        <p class="team_member">제작 : 이은성, 문유빈, 이범서, 김유란, 한영재</p>
+        <p class="team_content">
+          새롭게 하기 위한 팀이 왔다.<br />
+          2034년 최고의 영화
+        </p>
+      </div>
+    </div>
+
+    <!-- 팀 카드 -->
+    <div class="team_card">
+      <div class="team_homepage">팀원의 홈페이지</div>
+      <div class="row row-cols-1 row-cols-md-6 g-4">
+        <div class="col">
+          <div class="card">
+            <img
+              src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img
+              src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img
+              src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img
+              src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img
+              src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img
+              src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">이름</h5>
+              <p class="card-text">개인마다 한마디</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </header>
 
-  <!-- 팀이름 -->
-  <div class="team_main">
-    <div class="team_main_name">
-      <p>Prime</p>
-      <p class="team_member">제작 : 이은성, 문유빈, 이범서, 김유란, 한영재</p>
-      <p class="team_content">
-        새롭게 하기 위한 팀이 왔다.<br />
-        2034년 최고의 영화
-      </p>
-    </div>
-  </div>
-
-  <!-- 팀 카드 -->
-  <div class="team_card">
-    <div class="team_homepage">팀원의 홈페이지</div>
-    <div class="row row-cols-1 row-cols-md-6 g-4">
-      <div class="col">
-        <div class="card">
-          <img src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">이름</h5>
-            <p class="card-text">개인마다 한마디</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">이름</h5>
-            <p class="card-text">개인마다 한마디</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">이름</h5>
-            <p class="card-text">개인마다 한마디</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">이름</h5>
-            <p class="card-text">개인마다 한마디</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">이름</h5>
-            <p class="card-text">개인마다 한마디</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">이름</h5>
-            <p class="card-text">개인마다 한마디</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 방명록 -->
-  <div class="guestbook">
-    <div class="guestbook_title">
-      <p>방명록</p>
-      <button id="writebtn" type="button" class="btn btn-secondary">
-        적기
-      </button>
-    </div>
-    <div class="guestbook_input">
-      <div id="postingBox" class="myPostingBox">
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="nickname" placeholder="닉네임" />
-          <label for="floatingInput">닉네임</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="comment" placeholder="남길 글" />
-          <label for="floatingInput">남길 글</label>
-        </div>
-        <button id="postingbtn" type="button" class="btn btn-danger">
-          기록하기
+    <!-- 방명록 -->
+    <div class="guestbook">
+      <div class="guestbook_title">
+        <p>방명록</p>
+        <button id="writebtn" type="button" class="btn btn-secondary">
+          적기
         </button>
       </div>
-    </div>
+      <div class="guestbook_input">
+        <div id="postingBox" class="myPostingBox">
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="nickname"
+              placeholder="닉네임"
+            />
+            <label for="floatingInput">닉네임</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="comment"
+              placeholder="남길 글"
+            />
+            <label for="floatingInput">남길 글</label>
+          </div>
+          <button id="postingbtn" type="button" class="btn btn-danger">
+            기록하기
+          </button>
+        </div>
+      </div>
 
-    <div class="guestbook_content">
-      <div id="guestbook_content" class="column column-cols-1 column-cols-md-4 g-4">
+      <div class="guestbook_content">
+        <div
+          id="guestbook_content"
+          class="column column-cols-1 column-cols-md-4 g-4"
+        ></div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
