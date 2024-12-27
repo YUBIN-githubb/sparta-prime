@@ -2,7 +2,7 @@
 
 # [ABOUT PRIME]
 
-URL :   
+URL : https://yubin-githubb.github.io/sparta-prime/  
 > **PRIME을 소개합니다!**
 
 ---
