@@ -1,390 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>미니온보딩 13조 - Prime</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
 
-    <script type="module">
-      // Firebase SDK 라이브러리 가져오기
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      import {
-        collection,
-        addDoc,
-      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미니온보딩 13조 - Prime</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyCQ4H7stZ9xqkpG-jbPJRb9Xtmz2Cyz2G0",
-        authDomain: "sparta-prime.firebaseapp.com",
-        projectId: "sparta-prime",
-        storageBucket: "sparta-prime.firebasestorage.app",
-        messagingSenderId: "306127206461",
-        appId: "1:306127206461:web:cbea6b1e2c8c4193c9d254",
-        measurementId: "G-Q2PYG6MT1F",
+  <script type="module">
+    // Firebase SDK 라이브러리 가져오기
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import {
+      collection,
+      addDoc,
+    } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCQ4H7stZ9xqkpG-jbPJRb9Xtmz2Cyz2G0",
+      authDomain: "sparta-prime.firebaseapp.com",
+      projectId: "sparta-prime",
+      storageBucket: "sparta-prime.firebasestorage.app",
+      messagingSenderId: "306127206461",
+      appId: "1:306127206461:web:cbea6b1e2c8c4193c9d254",
+      measurementId: "G-Q2PYG6MT1F",
+    };
+
+    // Firebase 인스턴스 초기화
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    $("#postingbtn").click(async function () {
+      let nickname = $("#nickname").val();
+      let comment = $("#comment").val();
+
+      let doc = {
+        nickname: nickname,
+        comment: comment,
       };
+      await addDoc(collection(db, "guestbook"), doc);
+      alert("저장 완료!");
+      window.location.reload();
+    });
 
-      // Firebase 인스턴스 초기화
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
+    let docs = await getDocs(collection(db, "guestbook"));
+    docs.forEach((doc) => {
+      let row = doc.data();
+      let nickname = row["nickname"];
+      let comment = row["comment"];
 
-      $("#postingbtn").click(async function () {
-        let nickname = $("#nickname").val();
-        let comment = $("#comment").val();
-
-        let doc = {
-          nickname: nickname,
-          comment: comment,
-        };
-        await addDoc(collection(db, "guestbook"), doc);
-        alert("저장 완료!");
-        window.location.reload();
-      });
-
-      let docs = await getDocs(collection(db, "guestbook"));
-      docs.forEach((doc) => {
-        let row = doc.data();
-        let nickname = row["nickname"];
-        let comment = row["comment"];
-
-        let temp_html = `
+      let temp_html = `
       <div class="guestbook_content_list">
         <p class="content_nickname">${nickname}</p>
         <p class="content_writing">${comment}</p>
       </div>`;
-        $("#guestbook_content").append(temp_html);
-      });
+      $("#guestbook_content").append(temp_html);
+    });
 
-      $("#writebtn").click(async function () {
-        $("#postingBox").toggle();
-      });
-    </script>
+    $("#writebtn").click(async function () {
+      $("#postingBox").toggle();
+    });
+  </script>
 
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100..900&display=swap");
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100..900&display=swap");
 
-      body {
-        background-color: rgb(20, 20, 20);
-      }
+    body {
+      background-color: rgb(20, 20, 20);
+    }
 
-      * {
-        font-family: "Noto Sans KR", serif;
-        font-optical-sizing: auto;
-      }
+    * {
+      font-family: "Noto Sans KR", serif;
+      font-optical-sizing: auto;
+    }
 
-      .team_main {
-        width: 100%;
-        height: 850px;
-        color: white;
+    .team_main {
+      width: 100%;
+      height: 850px;
+      color: white;
 
-        background-image: url("https://wimg.heraldcorp.com/content/default/2015/03/06/20150306001045_0.jpg");
-        background-position: center;
-        background-size: cover;
+      background-image: url("https://wimg.heraldcorp.com/content/default/2015/03/06/20150306001045_0.jpg");
+      background-position: center;
+      background-size: cover;
 
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        justify-content: center;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      justify-content: center;
+    }
 
-      .team_main_name {
-        font-family: "Black Han Sans", serif;
-        font-weight: auto;
-        font-style: normal;
-        padding: 0px 10px 0px 10px;
-        background-color: rgb(40, 40, 40, 0.5);
-        border-radius: 20px;
-        margin: auto auto 20px 50px;
-        font-size: 100px;
-        color: skyblue;
-        /* background-color: green; */
-      }
+    .team_main_name {
+      font-family: "Black Han Sans", serif;
+      font-weight: auto;
+      font-style: normal;
+      padding: 0px 10px 0px 10px;
+      background-color: rgb(40, 40, 40, 0.5);
+      border-radius: 20px;
+      margin: auto auto 20px 50px;
+      font-size: 100px;
+      color: skyblue;
+      /* background-color: green; */
+    }
 
-      .team_member {
-        font-size: 40px;
-        color: rgb(120, 163, 255);
-      }
+    .team_member {
+      font-size: 40px;
+      color: rgb(120, 163, 255);
+    }
 
-      .team_content {
-        margin-bottom: 60px;
-        font-size: 40px;
-        color: rgb(193, 173, 242);
-      }
+    .team_content {
+      margin-bottom: 60px;
+      font-size: 40px;
+      color: rgb(193, 173, 242);
+    }
 
-      .team_card {
-        margin: 20px auto 0px auto;
-        width: 100%;
-        padding: 20px 20px 20px 20px;
-      }
+    .team_card {
+      margin: 20px auto 0px auto;
+      width: 100%;
+      padding: 20px 20px 20px 20px;
+    }
 
-      .team_homepage {
-        font-size: 40px;
-        color: white;
-        margin: 0px auto 10px 0px;
-      }
+    .team_homepage {
+      font-size: 40px;
+      color: white;
+      margin: 0px auto 10px 0px;
+    }
 
-      .guestbook {
-        margin: 50px auto 30px auto;
-        height: 800px;
-        width: 1200px;
-        padding: 10px;
-      }
+    .guestbook {
+      margin: 50px auto 30px auto;
+      height: 800px;
+      width: 1200px;
+      padding: 10px;
+    }
 
-      .guestbook > button {
-        font-size: 40px;
-      }
+    .guestbook>button {
+      font-size: 40px;
+    }
 
-      .guestbook_title {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
+    .guestbook_title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
 
-        height: 50px;
-        background-color: #dc3545;
-        font-size: 30px;
-        padding: 5px;
-        margin-bottom: 10px;
+      height: 50px;
+      background-color: #dc3545;
+      font-size: 30px;
+      padding: 5px;
+      margin-bottom: 10px;
 
-        color: white;
+      color: white;
 
-        border: 1px solid white;
-        border-radius: 10px;
-      }
+      border: 1px solid white;
+      border-radius: 10px;
+    }
 
-      .guestbook_title > p {
-        margin-left: auto;
-        margin-right: auto;
-      }
+    .guestbook_title>p {
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-      .guestbook_input {
-        margin: 0px auto 0px auto;
-        width: 50%;
+    .guestbook_input {
+      margin: 0px auto 0px auto;
+      width: 50%;
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-      .myPostingBox {
-        margin: 20px auto 20px auto;
-        width: 500px;
+    .myPostingBox {
+      margin: 20px auto 20px auto;
+      width: 500px;
 
-        border: 1px solid white;
+      border: 1px solid white;
 
-        padding: 20px;
-        border-radius: 5px;
-      }
+      padding: 20px;
+      border-radius: 5px;
+    }
 
-      .myPostingBox > button {
-        width: 100%;
-      }
+    .myPostingBox>button {
+      width: 100%;
+    }
 
-      .guestbook_content {
-        margin: 0px auto 0px auto;
-        width: 90%;
-        display: flex;
-        flex-direction: column;
-        align-items: top;
-        justify-content: center;
-      }
+    .guestbook_content {
+      margin: 0px auto 0px auto;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: top;
+      justify-content: center;
+    }
 
-      .guestbook_content_list {
-        height: 80px;
-        padding: 10px;
+    .guestbook_content_list {
+      height: 80px;
+      padding: 10px;
 
-        display: flex;
-        flex-direction: row;
-      }
+      display: flex;
+      flex-direction: row;
+    }
 
-      .content_nickname {
-        border: 1px solid white;
-        color: white;
-        width: 20%;
-        margin-right: 20px;
-        padding: 10px;
+    .content_nickname {
+      border: 1px solid white;
+      color: white;
+      width: 20%;
+      margin-right: 20px;
+      padding: 10px;
 
-        border-radius: 5px;
-      }
+      border-radius: 5px;
+    }
 
-      .content_writing {
-        border: 1px solid white;
-        color: white;
-        width: 80%;
-        padding: 10px;
-        border-radius: 5px;
-      }
+    .content_writing {
+      border: 1px solid white;
+      color: white;
+      width: 80%;
+      padding: 10px;
+      border-radius: 5px;
+    }
 
-      .mybtn {
-        border-radius: 5px;
-      }
-    </style>
-  </head>
+    .mybtn {
+      border-radius: 5px;
+    }
+  </style>
+</head>
 
-  <body>
-    <!-- 팀 헤더 -->
-    <header class="p-3 text-bg-dark">
-      <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-              <a href="index.html" class="nav-link px-2 text-danger">
-                  <h1>Prime</h1>
-              </a>
-          </div>
+<body>
+  <!-- 팀 헤더 -->
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="index.html" class="nav-link px-2 text-danger">
+          <h1>Prime</h1>
+        </a>
       </div>
+    </div>
   </header>
 
-    <!-- 팀이름 -->
-    <div class="team_main">
-      <div class="team_main_name">
-        <p>Prime</p>
-        <p class="team_member">제작 : 이은성, 문유빈, 이범서, 김유란, 한영재</p>
-        <p class="team_content">
-          새롭게 하기 위한 팀이 왔다.<br />
-          2034년 최고의 영화
-        </p>
-      </div>
+  <!-- 팀이름 -->
+  <div class="team_main">
+    <div class="team_main_name">
+      <p>Prime</p>
+      <p class="team_member">제작 : 이은성, 문유빈, 이범서, 김유란, 한영재</p>
+      <p class="team_content">
+        새롭게 하기 위한 팀이 왔다.<br />
+        2034년 최고의 영화
+      </p>
     </div>
+  </div>
 
-    <!-- 팀 카드 -->
-    <div class="team_card">
-      <div class="team_homepage">팀원의 홈페이지</div>
-      <div class="row row-cols-1 row-cols-md-5 g-4">
-        <div class="col">
-          <div class="card">
-            <img
-              src="https://i.namu.wiki/i/Bbq0E9hXYyrXbL4TnIE__vtQ2QwiZ3i40NZSLiX_a6S0ftYCndVZjf4vlruWur4I3Z0o7CZuFrRMl2CKxyk30w.webp"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">이은성</h5>
-              <p class="card-text">쉬는건 취업하고</p>
-              <a href="개인페이지\은성\index.html">
-                <button class="mybtn">둘러보기</button>
-              </a>
-            </div>
+  <!-- 팀 카드 -->
+  <div class="team_card">
+    <div class="team_homepage">팀원의 홈페이지</div>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+      <div class="col">
+        <div class="card">
+          <img
+            src="https://i.namu.wiki/i/Bbq0E9hXYyrXbL4TnIE__vtQ2QwiZ3i40NZSLiX_a6S0ftYCndVZjf4vlruWur4I3Z0o7CZuFrRMl2CKxyk30w.webp"
+            class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">이은성</h5>
+            <p class="card-text">쉬는건 취업하고</p>
+            <a href="개인페이지\은성\index.html">
+              <button class="mybtn">둘러보기</button>
+            </a>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <img
-              src="data:image/png;base64,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"
-              class="card-img-top"
-              alt="유빈 메인페이지 프로필"
-            />
-            <div class="card-body">
-              <h5 class="card-title">문유빈</h5>
-              <p class="card-text">
-                열심히 해서 백엔드 개발자로 취뽀하자! 할 수 있다!
-              </p>
-              <a href="개인페이지\유빈\yubin.html">
-                <button class="mybtn">둘러보기</button>
-              </a>
-            </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img
+            src="data:image/png;base64,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"
+            class="card-img-top" alt="유빈 메인페이지 프로필" />
+          <div class="card-body">
+            <h5 class="card-title">문유빈</h5>
+            <p class="card-text">
+              열심히 해서 백엔드 개발자로 취뽀하자! 할 수 있다!
+            </p>
+            <a href="개인페이지\유빈\yubin.html">
+              <button class="mybtn">둘러보기</button>
+            </a>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <img
-              src="https://poomang.com/_next/image?url=https%3A%2F%2Fcdn.poomang.com%2Fauto-generated%2Ftalking-potato%2Fimages%2Fcover.png%3Fts%3D1681444699874&w=1920&q=75"
-              class="card-img-top"
-              alt="영재 메인페이지 프로필"
-            />
-            <div class="card-body">
-              <h5 class="card-title">한영재</h5>
-              <p class="card-text">열심히 공부해서 싹튼 감자가 되어보자!</p>
-              <a href="개인페이지\영재\mypro.html">
-                <button class="mybtn">둘러보기</button>
-              </a>
-            </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img
+            src="https://poomang.com/_next/image?url=https%3A%2F%2Fcdn.poomang.com%2Fauto-generated%2Ftalking-potato%2Fimages%2Fcover.png%3Fts%3D1681444699874&w=1920&q=75"
+            class="card-img-top" alt="영재 메인페이지 프로필" />
+          <div class="card-body">
+            <h5 class="card-title">한영재</h5>
+            <p class="card-text">열심히 공부해서 싹튼 감자가 되어보자!</p>
+            <a href="개인페이지\영재\mypro.html">
+              <button class="mybtn">둘러보기</button>
+            </a>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <img
-            src="https://t1.daumcdn.net/cafeattach/1IHuH/d9b52b6eaa0d90dbedc3fa792ceaf4e4ce4dd884"
-            class="card-img-top"
-            alt="유란 메인페이지 프로필"
-          />
-            <div class="card-body">
-              <h5 class="card-title">김유란</h5>
-              <p class="card-text">열공하겠습니다!</p>
-              <a href="개인페이지\유란\yr.html">
-                <button class="mybtn">둘러보기</button>
-              </a>
-            </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="https://i.ibb.co/bLG4mT3/d9b52b6eaa0d90dbedc3fa792ceaf4e4ce4dd884.jpg"
+            class="card-img-top" alt="유란 메인페이지 프로필" />
+          <div class="card-body">
+            <h5 class="card-title">김유란</h5>
+            <p class="card-text">열공하겠습니다!</p>
+            <a href="개인페이지\유란\yr.html">
+              <button class="mybtn">둘러보기</button>
+            </a>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm-_bIeSr6lvt-Y3XkserY-2GTEu7YtaVWog&s"
-              class="card-img-top"
-              alt="범서 메인페이지 프로필"
-            />
-            <div class="card-body">
-              <h5 class="card-title">이범서</h5>
-              <p class="card-text">모두들 화이팅입니다!</p>
-              <a href="개인페이지\범서\polaris.html">
-                <button class="mybtn">둘러보기</button>
-              </a>
-            </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm-_bIeSr6lvt-Y3XkserY-2GTEu7YtaVWog&s"
+            class="card-img-top" alt="범서 메인페이지 프로필" />
+          <div class="card-body">
+            <h5 class="card-title">이범서</h5>
+            <p class="card-text">모두들 화이팅입니다!</p>
+            <a href="개인페이지\범서\polaris.html">
+              <button class="mybtn">둘러보기</button>
+            </a>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 방명록 -->
-    <div class="guestbook">
-      <div class="guestbook_title">
-        <p style="padding-top: 20px;">방명록</p>
-        <button id="writebtn" type="button" class="btn btn-secondary">
-          적기
+  <!-- 방명록 -->
+  <div class="guestbook">
+    <div class="guestbook_title">
+      <p style="padding-top: 20px;">방명록</p>
+      <button id="writebtn" type="button" class="btn btn-secondary">
+        적기
+      </button>
+    </div>
+    <div class="guestbook_input">
+      <div id="postingBox" class="myPostingBox">
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="nickname" placeholder="닉네임" />
+          <label for="floatingInput">닉네임</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="comment" placeholder="남길 글" />
+          <label for="floatingInput">남길 글</label>
+        </div>
+        <button id="postingbtn" type="button" class="btn btn-danger">
+          기록하기
         </button>
       </div>
-      <div class="guestbook_input">
-        <div id="postingBox" class="myPostingBox">
-          <div class="form-floating mb-3">
-            <input
-              type="email"
-              class="form-control"
-              id="nickname"
-              placeholder="닉네임"
-            />
-            <label for="floatingInput">닉네임</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="email"
-              class="form-control"
-              id="comment"
-              placeholder="남길 글"
-            />
-            <label for="floatingInput">남길 글</label>
-          </div>
-          <button id="postingbtn" type="button" class="btn btn-danger">
-            기록하기
-          </button>
-        </div>
-      </div>
-
-      <div class="guestbook_content">
-        <div
-          id="guestbook_content"
-          class="column column-cols-1 column-cols-md-4 g-4"
-        ></div>
-      </div>
     </div>
-  </body>
+
+    <div class="guestbook_content">
+      <div id="guestbook_content" class="column column-cols-1 column-cols-md-4 g-4"></div>
+    </div>
+  </div>
+</body>
+
 </html>
