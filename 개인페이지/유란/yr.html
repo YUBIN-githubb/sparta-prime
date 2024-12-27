@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/61d4d22048.js" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Gowun+Dodum&family=Noto+Sans+KR:wght@100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 네비게이션 바 높이 조정 */
+        .navbar {
+            height: 80px;
+            /* 원하는 높이로 조정 */
+            align-items: center;
+            /* 세로 정렬 */
+        }
+
+        .container-fluid {
+            padding-left: 100px;
+        }
+
+        /* 네비게이션 리스트 스타일 */
+        .custom-nav {
+            display: flex;
+            /* Flexbox로 정렬 */
+            justify-content: space-between;
+            /* 항목 간 간격 균등 분배 */
+            align-items: center;
+            /* 세로 정렬 */
+            padding: 0;
+            margin-left: 100px;
+            list-style: none;
+        }
+
+        /* 각 <li> 간격 및 링크 스타일 */
+        .custom-nav .nav-item {
+            margin: 0 50px;
+            /* 좌우 간격 조정 */
+        }
+
+        .custom-nav .nav-link {
+            color: white;
+            /* 링크 색상 */
+            font-weight: bold;
+            /* 글자 두께 */
+            text-decoration: none;
+            padding: 5px 10px;
+            /* 내부 여백 */
+        }
+
+        .custom-nav .nav-link.active {
+            background-color: #0d6efd;
+            border-radius: 5px;
+        }
+
+
+
+        body {
+            background-image: url('https://i.ibb.co/v3TqB8n/Pngtree-sleek-and-immaculate-a-cold-13578584.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding-top: 56px;
+            font-family: "Noto Sans KR", serif;
+        }
+
+        .top {
+            margin: 40px auto;
+            width: 1000px;
+            height: 230px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .myImg {
+            height: 230px;
+            width: 450px;
+            border: 3px solid;
+            border-radius: 20px;
+            background-image: url('img.jpg');
+            background-size: cover;
+            background-position: center -260px;
+            background-repeat: no-repeat;
+        }
+
+        .tmi {
+            height: 230px;
+            width: 500px;
+            border: 3px solid;
+            border-radius: 20px;
+            padding: 25px 20px;
+            background-color: rgba(173, 216, 230, 0.6);
+        }
+
+        .tmi>h1 {
+            font-weight: bold;
+        }
+
+        .tmi>p {
+            padding-top: 15px;
+            font-size: 25px;
+        }
+
+        .center {
+            margin: 40px auto;
+            width: 1000px;
+            height: 150px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name,
+        .mbti {
+            background-color: cornflowerblue;
+            width: 300px;
+            height: 150px;
+            text-align: center;
+            font-size: 45px;
+            padding: 35px 0;
+            border: 3px solid;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .cap {
+            background-color: cornflowerblue;
+            width: 300px;
+            height: 150px;
+            text-align: center;
+            font-size: 40px;
+            padding: 10px 0;
+            border: 3px solid;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .bottom {
+            margin: 40px auto;
+            padding: 30px 20px;
+            background-color: rgba(173, 216, 230, 0.6);
+            width: 1000px;
+            height: 400px;
+            border: 3px solid;
+            border-radius: 20px;
+        }
+
+        .bottom>h1 {
+            font-weight: bold;
+        }
+
+        .list {
+            margin: auto 20px;
+            padding: 0px 20px;
+            height: 270px;
+        }
+
+        .row1,
+        .row2,
+        .row3 {
+            margin: 20px auto;
+            height: 70px;
+            padding: 15px 30px;
+            border: 3px solid;
+            border-radius: 20px;
+            background-color: cornflowerblue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        span {
+            margin-left: auto;
+            font-weight: lighter;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body fixed-top" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../../index.html">Prime</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="nav nav-pills custom-nav">
+                    <li class="nav-item"><a class="nav-link" href="../은성/index.html">이은성</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../유빈/yubin.html">문유빈</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">김유란</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../영재/mypro.html">한영재</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">이범서</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="intro">
+        <div class="top">
+            <div class="myImg"></div>
+            <div class="tmi">
+                <h1>각오 & TMI</h1>
+                <p><i class="fa-solid fa-play"></i> 열심히 공부해서 백엔드 개발자가 되겠습니다.<br>
+                    <i class="fa-solid fa-play"></i> 야구를 좋아합니다.&nbsp;<i class="fa-solid fa-baseball"></i>
+                </p>
+            </div>
+        </div>
+        <div class="center">
+            <div class="name">김유란</div>
+            <div class="mbti">ISFP</div>
+            <div class="cap">종합 능력치<br>⭐⭐⭐</div>
+        </div>
+        <div class="bottom">
+            <h1>&nbsp;&nbsp;능력치</h1>
+            <div class="list">
+                <div class="row1">
+                    노력&emsp;⭐⭐⭐⭐<span>열심히, 성실히 임하겠습니다!</span>
+                </div>
+                <div class="row2">
+                    지식&emsp;⭐⭐<span>아직 배울 것이 많아 더 노력하겠습니다.</span>
+                </div>
+                <div class="row3">
+                    &nbsp;&nbsp;&nbsp;깡&emsp;⭐⭐<span>낯을 많이 가립니다 ㅎㅎ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
